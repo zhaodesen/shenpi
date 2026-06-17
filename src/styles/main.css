@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', Arial, sans-serif;
+  color: #303133;
+  background-color: #f0f2f5;
+}
+
+.page-container {
+  padding: 16px;
+}
+
+.page-card {
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.page-desc {
+  color: #909399;
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.flow-tip {
+  background: #f4f4f5;
+  border-left: 3px solid #409eff;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #606266;
+  border-radius: 4px;
+  line-height: 1.7;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.text-muted {
+  color: #909399;
+}
+
+.text-mono {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+}
