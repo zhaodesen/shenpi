@@ -1,71 +1,74 @@
-# CRM 签单审批系统（Vite + Vue3）
+# CRM Approval Workflow Demo
 
-根据流程图实现的 CRM 签单审批演示系统，覆盖「权限配置 → 人员管理 → 产品申请表单 → 签单申请 → 多级审批 → 客户库」完整链路。
+A frontend demo of an end-to-end CRM contract approval process, from permissions and staff setup to multi-stage review and customer records.
 
-## 技术栈
+[English](./README.md) | [简体中文](./README.zh-CN.md)
 
-- **Vite 6** + **Vue 3**（`<script setup>` 组合式 API）
-- **Vue Router 4**（含功能权限路由守卫）
-- **Pinia**（状态管理，localStorage 持久化）
-- **Element Plus**（UI 组件库，中文语言包）
+## Features
 
-## 快速开始
+- Organization, group, role, and permission configuration
+- Staff management with function-level access control
+- Dynamic product application forms
+- Contract applications for new or existing customers
+- Finance-first review followed by configurable reviewers
+- Applicant information-completion step between review stages
+- Customer visibility rules for applicants, reviewers, managers, and administrators
+- Built-in demo identities and resettable local data
+
+## Tech Stack
+
+Vue 3 · Vite 6 · Vue Router · Pinia · Element Plus · localStorage
+
+## Getting Started
 
 ```bash
 npm install
-npm run dev      # 启动开发服务器 http://localhost:5173
-npm run build    # 生产构建
-npm run preview  # 预览构建产物
+npm run dev
 ```
 
-## 功能模块（对应流程图）
+Open `http://localhost:5173` unless Vite prints a different address.
 
-| 流程图节点 | 模块 | 路由 |
-| --- | --- | --- |
-| 权限配置功能（组织架构/组/角色） | 权限配置 | `/org` |
-| 人员管理（配置人员权限） | 人员管理 | `/personnel` |
-| 产品申请表单模块 | 产品申请表单 | `/product-form` |
-| 签单申请（选公司/新客户/选表单/提交） | 签单申请 | `/apply-create` |
-| 提交人 → 签单申请列表（去补充） | 签单申请列表 | `/apply-list` |
-| 第一审核人（财务）→ 其他审核人 | 审核 | `/review` |
-| 审核走完 → 客户库 | 客户库 | `/customer` |
+## Approval Flow
 
-## 核心审批流程
-
-1. **签单申请**：提交人选择已有公司或新客户，选择产品申请表单（按产品类型默认自动匹配），填写信息后提交。
-2. **审核中**：在签单申请列表生成记录，状态为「审核中」，「去补充」**不可点击**。
-3. **财务审核（第一审核人）**：财务对申请审核；**同意后**匹配产品申请表单，申请变为「待补充」。
-4. **信息补充**：状态为「待补充」时「去补充」**可点击**，提交人补充信息。
-   - ⚠️ 进入下一审核人需**同时满足两个条件**：① 财务同意；② 申请人补充完成。
-5. **逐级审核**：其他审核人按审批流顺序逐级审核并生成审核记录。
-6. **客户库**：审核走完后，客户与产品进入客户库。
-
-## 可见性规则（客户库）
-
-- **提交人**：只显示「我签的」客户的产品。
-- **审核人**：只显示「经我审核」客户的产品；未经我审核不显示。
-- **上级**：可查看下级签单 / 维护 / 经办的相关产品。
-- **管理员**：可见全部。
-
-## 演示说明
-
-- 顶部右上角可**切换身份**，体验销售 / 财务 / 审核人 / 管理员的不同视角与权限。
-- 内置演示账号：
-  - 超级管理员（全部权限）
-  - 张伟 / 李娜（销售：发起签单、补充、查看自己客户）
-  - 王芳（财务：第一审核人）
-  - 刘强（审核人）、陈明（大区总监，张伟/刘强的上级）
-- 数据存于浏览器 localStorage，点击右上角「**重置演示数据**」可恢复初始状态。
-
-## 目录结构
-
+```text
+Submit application
+  → finance review
+  → applicant completes required information
+  → sequential reviewer approval
+  → customer and product enter the customer library
 ```
+
+Finance approval and applicant completion must both be satisfied before the next reviewer can act.
+
+## Main Routes
+
+| Route | Module |
+| --- | --- |
+| `/org` | Organization and permissions |
+| `/personnel` | Staff management |
+| `/product-form` | Product application forms |
+| `/apply-create` | New contract application |
+| `/apply-list` | Application list and completion tasks |
+| `/review` | Approval workspace |
+| `/customer` | Customer library |
+
+## Demo Data
+
+Use the identity switcher in the top-right corner to experience sales, finance, reviewer, manager, and administrator perspectives. Data is stored in the browser and can be restored with **Reset demo data**.
+
+## Project Structure
+
+```text
 src/
-├── components/      # DynamicForm 动态表单、FieldRows 字段编辑
-├── constants/       # 权限点、状态枚举
-├── layouts/         # MainLayout 主布局（侧边栏 + 身份切换）
-├── mock/            # seed.js 演示种子数据
-├── router/          # 路由 + 权限守卫
-├── stores/          # Pinia：org/personnel/productForm/auth/application/customer
-└── views/           # 各业务页面
+├── components/   # Dynamic forms and shared UI
+├── constants/    # Permissions and statuses
+├── layouts/      # Main application layout
+├── mock/         # Demo seed data
+├── router/       # Routes and permission guards
+├── stores/       # Pinia business stores
+└── views/        # Feature pages
 ```
+
+## Scope
+
+This is a frontend workflow demonstration. It uses local mock data and is not a production CRM backend.
